@@ -51,12 +51,6 @@ void setup(void)
   pinMode(inSignalPin, INPUT);
   pinMode(out_outOfLimits, OUTPUT);
   pinMode(out_insideOfLimits, OUTPUT);
-  Serial.println();
-  Serial.println("####################################");
-  Serial.println("Sustenta is Running on board!");
-  Serial.println("####################################");
-  Serial.println();
-
 }
 
 void loop(void)
@@ -80,13 +74,9 @@ void loop(void)
     }
 
   //DEBUG
-  Serial.println();
-  Serial.print("analogVoltage:  ");
+  Serial.print("Hum ");
   Serial.print(analogVoltage);
-  Serial.print(" [V]  ");
+  Serial.print(" Temp ");
+  Serial.println(Celcius);
   
-  Serial.print("Temperature:  ");
-  Serial.print(Celcius);
-  Serial.print(" °C  ");
-  Serial.println();
 }
