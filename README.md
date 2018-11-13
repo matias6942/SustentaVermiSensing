@@ -1,5 +1,16 @@
 
-# Install node.js and Node-Red:
+
+Plataform: Linux Mint [Debian Based Distribution]
+
+# Dependencies
+
+## Install Node.js 
+
+https://github.com/nodesource/distributions/blob/master/README.md
+
+## Install Node-Red
+
+sudo npm install -g --unsafe-perm node-red
 
 # Node-red Flow
 
@@ -8,7 +19,6 @@ Node red dir:
 	~/.node-red
 
 # Install serial and Dashboard Nodes on local machine
-
 
 	npm i node-red-node-serialport
 	npm install node-red-dashboard	
