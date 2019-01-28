@@ -44,6 +44,14 @@ float toAnalogVoltage(int analogInput){
   return analogVoltage;
   }
 
+float toHumidity(int analogInput){
+  float humidity = -0.106*analogInput+140.28; 
+  if(humidity > 100.){
+    humidity = 100.;
+    }
+  return humidity;
+  }
+
 void setup(void)
 {  
   Serial.begin(dataRate);
@@ -59,10 +67,10 @@ void loop(void)
   Celcius = tempSensors.getTempCByIndex(0);
 
   int analogInput = analogRead(inSignalPin);
-  float analogVoltage = toAnalogVoltage(analogInput);
+  float humidity = toHumidity(analogInput);
 
-
-  if (analogVoltage >= minSoilHumidity){
+/*
+  if (humidity >= minSoilHumidity){
   
     digitalWrite(out_outOfLimits, HIGH);
     digitalWrite(out_insideOfLimits, LOW);
@@ -72,11 +80,10 @@ void loop(void)
     digitalWrite(out_outOfLimits, LOW);
     digitalWrite(out_insideOfLimits, HIGH);
     }
-
+*/
   //DEBUG
   Serial.print("Hum ");
-  Serial.print(analogVoltage);
+  Serial.print(humidity);
   Serial.print(" Temp ");
   Serial.println(Celcius);
-  
 }
