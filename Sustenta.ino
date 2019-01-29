@@ -1,3 +1,5 @@
+
+
 /**
  * 
  * 
@@ -19,6 +21,7 @@
 #include <DallasTemperature.h>
 #include <SPI.h>
 #include <SD.h>
+#include <DS1302.h>
 
 // Sets data rate, rates availables 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, or 115200
 int dataRate = 1200;
@@ -37,6 +40,7 @@ int out_insideOfLimits = 13;
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature tempSensors(&oneWire);
 const int chipSelect = 8;
+DS1302 rtc(2, 3, 4);
 
 // ### Functions
 
@@ -73,6 +77,11 @@ void setup(void)
   while (1);
   }
   Serial.println("card initialized.");
+
+  rtc.writeProtect(true);
+  rtc.setTime(00, 18, 00);  // hh,mm,ss
+  rtc.setDate(29, 1, 2019); // day, month, year
+  rtc.setDOW(MONDAY);
   
 }
 
@@ -104,24 +113,25 @@ void loop(void)
   Serial.print(humidity);
   Serial.print(" Temp ");
   Serial.println(Celcius);
+  Serial.println(rtc.getDateStr());
+  Serial.println(rtc.getTimeStr());
   */
-  dataString = String(humidity) + "," + String(Celcius) + "\n";
+  
+  
+  dataString = String(rtc.getDateStr()) + "," + String(rtc.getTimeStr()) + "," + String(humidity) + "," + String(Celcius) + "\n";
 
   File dataFile = SD.open("datalog.txt", FILE_WRITE);
 
-  // if the file is available, write to it:
   if (dataFile) {
-    dataFile.println(dataString);
+    dataFile.print(dataString);
     dataFile.close();
-    // print to the serial port too:
-    Serial.println(dataString);
+    Serial.print(dataString);
   }
-  // if the file isn't open, pop up an error:
   else {
     Serial.println("error opening datalog.txt");
     dataFile.close();
   }
 
   delay(900000);
-  
+  //delay(1000);
 }
